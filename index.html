@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A.P.V Store | Início</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+        :root { --bg-principal: #0b0b0b; --bg-secundario: #121212; --texto-claro: #ffffff; --texto-escuro: #000000; --texto-mutado: #888888; --borda: #1c1c1c; --destaque: #ffffff; }
+        body { background-color: var(--bg-principal); color: var(--texto-claro); overflow-x: hidden; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 8%; background-color: rgba(11, 11, 11, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--borda); position: sticky; top: 0; z-index: 1000; }
+        .logo-container { display: flex; align-items: center; text-decoration: none; }
+        .logo-container img { height: 120px; width: auto; object-fit: contain; }
+        nav ul { display: flex; list-style: none; gap: 3.5rem; }
+        nav ul li a { color: var(--texto-claro); text-decoration: none; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 500; position: relative; transition: color 0.3s ease; }
+        nav ul li a:hover, nav ul li a.active { color: var(--texto-mutado); }
+        nav ul li a::after { content: ''; position: absolute; width: 0; height: 1px; bottom: -6px; left: 0; background-color: var(--destaque); transition: width 0.3s ease; }
+        nav ul li a:hover::after, nav ul li a.active::after { width: 100%; }
+        .hero-banner { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; min-height: 50vh; padding: 0 10%; background-color: var(--bg-principal); }
+        .hero-banner h1 { font-size: clamp(2.3rem, 4.5vw, 4rem); font-weight: 700; letter-spacing: 0.5px; line-height: 1.25; margin-bottom: 1.5rem; max-width: 900px; }
+        .hero-banner p { font-size: clamp(0.95rem, 1.2vw, 1.15rem); color: var(--texto-mutado); max-width: 600px; line-height: 1.6; }
+        .btn-garantir { display: inline-block; text-align: center; background-color: var(--destaque); color: var(--texto-escuro); text-decoration: none; padding: 1rem 2.5rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; border-radius: 2px; transition: background-color 0.3s ease; margin-top: 2rem; }
+        .btn-garantir:hover { background-color: #cccccc; }
+        .content-section { background-color: #ffffff; color: #000000; padding: 5rem 6%; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+        .block h2 { font-size: 2rem; margin-bottom: 1.5rem; font-weight: 700; }
+        .block p { font-size: 1rem; color: #333333; line-height: 1.7; }
+        @media (max-width: 768px) { header { flex-direction: column; gap: 1.5rem; padding: 1.5rem 0; } .logo-container img { height: 90px; } nav ul { gap: 1.5rem; } .content-section { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 6%; } }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo-container"><img src="imagens/logo.png" alt="A.P.V Store"></a>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="active">Início</a></li>
+                <li><a href="feminino.html">Feminino</a></li>
+                <li><a href="masculino.html">Masculino</a></li>
+                <li><a href="unissex.html">Unissex</a></li>
+                <li><a href="suporte.html">Suporte</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="hero-banner">
+        <h1>Vestindo a Verdade que nos Liberta</h1>
+        <p>Camisetas exclusivas criadas para evangelizar com estilo, presença e propósito.</p>
+        <a href="unissex.html" class="btn-garantir">Conhecer Coleção</a>
+    </main>
+    <section class="content-section">
+        <div class="block">
+            <h2>Quem Somos Nós?</h2>
+            <p>A <b>A.P.V Store</b> é uma loja online criada pelo Grupo de Jovens <b>Atraídos Pela Verdade</b>, da Renovação Carismática Católica. Nascemos com o intuito de evangelizar através de uma marca de roupas marcante, que une forte presença visual e identidade cristã.</p>
+        </div>
+        <div class="block">
+            <h2>Por que arrecadamos?</h2>
+            <p>Toda a receita proveniente das vendas da <b>A.P.V. Store</b> destina-se, exclusivamente, ao custeio de nossos encontros, dinâmicas, retiros e demais atividades. Empenhamo-nos em oferecer a máxima excelência em cada iniciativa, com o firme propósito de testemunhar que a santidade é plenamente possível na juventude.</p>
+        </div>
+    </section>
+</body>
+</html>
