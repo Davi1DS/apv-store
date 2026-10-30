@@ -7,13 +7,17 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
         body { background-color: #0b0b0b; color: #fff; overflow-x: hidden; }
-        header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 8%; background-color: rgba(11, 11, 11, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid #1c1c1c; position: sticky; top: 0; z-index: 1000; }
+        header { background-color: rgba(11, 11, 11, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid #1c1c1c; position: sticky; top: 0; z-index: 1000; padding: 1rem 5%; width: 100%; }
+        .menu-estrutura { display: flex; flex-direction: column; align-items: center; width: 100%; gap: 1rem; }
         .logo-container { display: flex; align-items: center; text-decoration: none; }
-        .logo-container img { height: 120px; width: auto; }
-        .menu-estrutura { display: flex; align-items: center; gap: 3.5rem; width: 100%; justify-content: space-between; }
-        nav ul { display: flex; list-style: none; gap: 3.5rem; }
-        nav ul li a { color: #fff; text-decoration: none; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; }
-        .carrinho-topo { color: #fff; text-decoration: none; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; display: flex; align-items: center; gap: 8px; cursor: pointer; margin-left: auto; }
+        .logo-container img { height: 80px; width: auto; object-fit: contain; }
+        nav { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+        .nav-scroll-container { flex-grow: 1; overflow-x: auto; white-space: nowrap; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
+        .nav-scroll-container::-webkit-scrollbar { display: none; }
+        .nav-scroll-container { -ms-overflow-style: none; scrollbar-width: none; }
+        nav ul { display: inline-flex; list-style: none; gap: 1.5rem; }
+        nav ul li a { color: #fff; text-decoration: none; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 500; padding: 0.4rem 0; display: block; }
+        .carrinho-topo { color: #fff; text-decoration: none; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; display: flex; align-items: center; gap: 8px; cursor: pointer; white-space: nowrap; padding-left: 0.8rem; border-left: 1px solid #1c1c1c; }
         .carrinho-contador { background-color: #25d366; color: white; padding: 2px 8px; border-radius: 50%; font-size: 0.75rem; font-weight: bold; }
         .detalhe-produto-container { max-width: 1400px; margin: 4rem auto; padding: 0 6%; display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; }
         .detalhe-imagem-bloco { width: 100%; background-color: #121212; border: 1px solid #1c1c1c; border-radius: 4px; aspect-ratio: 3/4; overflow: hidden; }
@@ -27,6 +31,7 @@
         .btn-adicionar-carrinho { display: block; width: 100%; text-align: center; background-color: #fff; color: #000; padding: 1.2rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; border-radius: 4px; border: none; cursor: pointer; transition: background-color 0.3s; margin-bottom: 1.5rem; }
         .btn-adicionar-carrinho:hover { background-color: #ccc; }
         .btn-voltar { display: block; text-align: center; color: #888; text-decoration: none; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        @media (min-width: 769px) { header { padding: 1rem 8%; } .menu-estrutura { flex-direction: row; justify-content: space-between; gap: 0; } nav { width: auto; } .carrinho-topo { padding-left: 1.5rem; } }
         @media (max-width: 968px) { .detalhe-produto-container { grid-template-columns: 1fr; gap: 3rem; } .detalhe-info-bloco { position: static; } header { flex-direction: column; gap: 1rem; } .menu-estrutura { flex-direction: column; gap: 1rem; } .carrinho-topo { margin-left: 0; } }
     </style>
 </head>
@@ -35,15 +40,17 @@
         <div class="menu-estrutura">
             <a href="index.html" class="logo-container"><img src="imagens/logo.png" alt="A.P.V Store"></a>
             <nav>
-                <ul>
-                    <li><a href="index.html">Início</a></li>
-                    <li><a href="feminino.html">Feminino</a></li>
-                    <li><a href="masculino.html">Masculino</a></li>
-                    <li><a href="unissex.html">Unissex</a></li>
-                    <li><a href="suporte.html">Suporte</a></li>
-                </ul>
+                <div class="nav-scroll-container">
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="feminino.html">Feminino</a></li>
+                        <li><a href="masculino.html">Masculino</a></li>
+                        <li><a href="unissex.html">Unissex</a></li>
+                        <li><a href="suporte.html">Suporte</a></li>
+                    </ul>
+                </div>
+                <a href="carrinho.html" class="carrinho-topo">🛒 Carrinho <span class="carrinho-contador" id="cart-count">0</span></a>
             </nav>
-            <a href="carrinho.html" class="carrinho-topo">🛒 Carrinho <span class="carrinho-contador" id="cart-count">0</span></a>
         </div>
     </header>
     <main class="detalhe-produto-container">
@@ -76,8 +83,8 @@
             window.location.href = "carrinho.html";
         }
         function atualizarContador() {
-            const MathCarrinho = JSON.parse(localStorage.getItem('apv_carrinho')) || [];
-            document.getElementById('cart-count').innerText = Math.max(0, MathCarrinho.length);
+            const carrinho = JSON.parse(localStorage.getItem('apv_carrinho')) || [];
+            document.getElementById('cart-count').innerText = carrinho.length;
         }
         window.onload = atualizarContador;
     </script>

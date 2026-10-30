@@ -8,19 +8,37 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
         :root { --bg-principal: #0b0b0b; --bg-secundario: #121212; --texto-claro: #ffffff; --texto-escuro: #000000; --texto-mutado: #888888; --borda: #1c1c1c; --destaque: #ffffff; }
         body { background-color: var(--bg-principal); color: var(--texto-claro); overflow-x: hidden; }
-        header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 8%; background-color: rgba(11, 11, 11, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--borda); position: sticky; top: 0; z-index: 1000; }
+        
+        /* HEADER RESPONSIVO COM MENU DE ARRASTAR */
+        header { background-color: rgba(11, 11, 11, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--borda); position: sticky; top: 0; z-index: 1000; padding: 1rem 5%; width: 100%; }
+        .menu-estrutura { display: flex; flex-direction: column; align-items: center; width: 100%; gap: 1rem; }
         .logo-container { display: flex; align-items: center; text-decoration: none; }
-        .logo-container img { height: 120px; width: auto; object-fit: contain; }
-        .menu-estrutura { display: flex; align-items: center; gap: 3.5rem; width: 100%; justify-content: space-between; }
-        nav ul { display: flex; list-style: none; gap: 3.5rem; }
-        nav ul li a { color: var(--texto-claro); text-decoration: none; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 500; }
-        .carrinho-topo { color: var(--texto-claro); text-decoration: none; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; display: flex; align-items: center; gap: 8px; cursor: pointer; margin-left: auto; }
+        .logo-container img { height: 80px; width: auto; object-fit: contain; }
+        
+        nav { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+        .nav-scroll-container { flex-grow: 1; overflow-x: auto; white-space: nowrap; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
+        .nav-scroll-container::-webkit-scrollbar { display: none; }
+        .nav-scroll-container { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        nav ul { display: inline-flex; list-style: none; gap: 1.5rem; }
+        nav ul li a { color: var(--texto-claro); text-decoration: none; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 500; padding: 0.4rem 0; display: block; }
+        
+        .carrinho-topo { color: var(--texto-claro); text-decoration: none; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; display: flex; align-items: center; gap: 6px; cursor: pointer; white-space: nowrap; padding-left: 0.8rem; border-left: 1px solid var(--borda); }
         .carrinho-contador { background-color: #25d366; color: white; padding: 2px 8px; border-radius: 50%; font-size: 0.75rem; font-weight: bold; }
+
+        /* DESIGN DA CONTEÚDO DE SUPORTE */
         .suporte-container { max-width: 800px; margin: 6rem auto; padding: 0 6%; text-align: center; }
-        .suporte-titulo { font-size: 2rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1.5rem; }
-        .suporte-texto { color: var(--texto-mutado); line-height: 1.8; margin-bottom: 3rem; }
-        .btn-suporte-wa { display: inline-block; background-color: #25d366; color: white; text-decoration: none; padding: 1.2rem 3rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; border-radius: 4px; }
-        @media (max-width: 768px) { header { flex-direction: column; gap: 1rem; padding: 1rem 0; } .menu-estrutura { flex-direction: column; gap: 1rem; } .carrinho-topo { margin-left: 0; } }
+        .suporte-titulo { font-size: 1.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1.5rem; }
+        .suporte-texto { color: var(--texto-mutado); line-height: 1.8; margin-bottom: 3rem; font-size: 1rem; }
+        .btn-suporte-wa { display: inline-block; background-color: #25d366; color: white; text-decoration: none; padding: 1.2rem 3rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; border-radius: 4px; transition: background-color 0.3s; }
+        .btn-suporte-wa:hover { background-color: #1ebd59; }
+
+        @media (min-width: 769px) {
+            header { padding: 1rem 8%; }
+            .menu-estrutura { flex-direction: row; justify-content: space-between; gap: 0; }
+            nav { width: auto; }
+            .carrinho-topo { padding-left: 1.5rem; }
+        }
     </style>
 </head>
 <body>
@@ -28,23 +46,26 @@
         <div class="menu-estrutura">
             <a href="index.html" class="logo-container"><img src="imagens/logo.png" alt="A.P.V Store"></a>
             <nav>
-                <ul>
-                    <li><a href="index.html">Início</a></li>
-                    <li><a href="feminino.html">Feminino</a></li>
-                    <li><a href="masculino.html">Masculino</a></li>
-                    <li><a href="unissex.html">Unissex</a></li>
-                    <li><a href="suporte.html">Suporte</a></li>
-                </ul>
+                <div class="nav-scroll-container">
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="feminino.html">Feminino</a></li>
+                        <li><a href="masculino.html">Masculino</a></li>
+                        <li><a href="unissex.html">Unissex</a></li>
+                        <li><a href="suporte.html">Suporte</a></li>
+                    </ul>
+                </div>
+                <a href="carrinho.html" class="carrinho-topo">🛒 Carrinho <span class="carrinho-contador" id="cart-count">0</span></a>
             </nav>
-            <a href="carrinho.html" class="carrinho-topo">🛒 Carrinho <span class="carrinho-contador" id="cart-count">0</span></a>
         </div>
     </header>
+
     <div class="suporte-container">
         <h2 class="suporte-titulo">Central de Atendimento</h2>
         <p class="suporte-texto">Teve alguma dúvida sobre os tamanhos, tecidos ou precisa de ajuda com alguma encomenda que já realizou? Fale diretamente com a equipe de coordenação da A.P.V Store.</p>
-        <!-- Força o disparo direto no aplicativo do celular, evitando abrir páginas web -->
         <a href="whatsapp://send?phone=5512988315475&text=Ola%20Preciso%20de%20suporte%20com%20a%20loja" class="btn-suporte-wa">Falar com Suporte</a>
     </div>
+
     <script>
         function atualizarContador() {
             const carrinho = JSON.parse(localStorage.getItem('apv_carrinho')) || [];

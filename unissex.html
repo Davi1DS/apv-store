@@ -8,24 +8,39 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
         :root { --bg-principal: #0b0b0b; --bg-secundario: #121212; --texto-claro: #ffffff; --texto-escuro: #000000; --texto-mutado: #888888; --borda: #1c1c1c; --destaque: #ffffff; }
         body { background-color: var(--bg-principal); color: var(--texto-claro); overflow-x: hidden; }
-        header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 8%; background-color: rgba(11, 11, 11, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--borda); position: sticky; top: 0; z-index: 1000; }
+        
+        header { background-color: rgba(11, 11, 11, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--borda); position: sticky; top: 0; z-index: 1000; padding: 1rem 5%; width: 100%; }
+        .menu-estrutura { display: flex; flex-direction: column; align-items: center; width: 100%; gap: 1rem; }
         .logo-container { display: flex; align-items: center; text-decoration: none; }
-        .logo-container img { height: 120px; width: auto; object-fit: contain; }
-        .menu-estrutura { display: flex; align-items: center; gap: 3.5rem; width: 100%; justify-content: space-between; }
-        nav ul { display: flex; list-style: none; gap: 3.5rem; }
-        nav ul li a { color: var(--texto-claro); text-decoration: none; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 500; }
-        .carrinho-topo { color: var(--texto-claro); text-decoration: none; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; display: flex; align-items: center; gap: 8px; cursor: pointer; margin-left: auto; }
+        .logo-container img { height: 80px; width: auto; object-fit: contain; }
+        
+        nav { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+        .nav-scroll-container { flex-grow: 1; overflow-x: auto; white-space: nowrap; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
+        .nav-scroll-container::-webkit-scrollbar { display: none; }
+        .nav-scroll-container { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        nav ul { display: inline-flex; list-style: none; gap: 1.5rem; }
+        nav ul li a { color: var(--texto-claro); text-decoration: none; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 500; padding: 0.4rem 0; display: block; }
+        
+        .carrinho-topo { color: var(--texto-claro); text-decoration: none; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; display: flex; align-items: center; gap: 6px; cursor: pointer; white-space: nowrap; padding-left: 0.8rem; border-left: 1px solid var(--borda); }
         .carrinho-contador { background-color: #25d366; color: white; padding: 2px 8px; border-radius: 50%; font-size: 0.75rem; font-weight: bold; }
-        .categoria-titulo { text-align: center; margin: 4rem 0 2rem; font-size: 2rem; text-transform: uppercase; letter-spacing: 3px; }
-        .produtos-grid { max-width: 1400px; margin: 0 auto 6rem; padding: 0 6%; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2.5rem; }
+
+        .categoria-titulo { text-align: center; margin: 4rem 0 2rem; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .produtos-grid { max-width: 1300px; margin: 0 auto 6rem; padding: 0 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
         .produto-card { background-color: var(--bg-secundario); border: 1px solid var(--borda); border-radius: 4px; overflow: hidden; transition: transform 0.3s ease; display: flex; flex-direction: column; text-decoration: none; color: inherit; }
-        .produto-card:hover { transform: translateY(-5px); border-color: #333; }
+        .produto-card:hover { transform: translateY(-4px); border-color: #333; }
         .produto-imagem { width: 100%; aspect-ratio: 3/4; overflow: hidden; background-color: #1a1a1a; }
         .produto-imagem img { width: 100%; height: 100%; object-fit: cover; }
-        .produto-info { padding: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; flex-grow: 1; }
-        .prod-nome { font-size: 1.1rem; font-weight: 500; color: var(--texto-claro); }
-        .prod-preco { font-size: 1rem; color: var(--texto-mutado); font-weight: 600; }
-        @media (max-width: 768px) { header { flex-direction: column; gap: 1rem; padding: 1rem 0; } .menu-estrutura { flex-direction: column; gap: 1rem; } .carrinho-topo { margin-left: 0; } }
+        .produto-info { padding: 1rem; display: flex; flex-direction: column; gap: 0.4rem; flex-grow: 1; }
+        .prod-nome { font-size: 1rem; font-weight: 500; color: var(--texto-claro); }
+        .prod-preco { font-size: 0.95rem; color: var(--texto-mutado); font-weight: 600; }
+
+        @media (min-width: 769px) {
+            header { padding: 1rem 8%; }
+            .menu-estrutura { flex-direction: row; justify-content: space-between; gap: 0; }
+            nav { width: auto; }
+            .carrinho-topo { padding-left: 1.5rem; }
+        }
     </style>
 </head>
 <body>
@@ -33,17 +48,20 @@
         <div class="menu-estrutura">
             <a href="index.html" class="logo-container"><img src="imagens/logo.png" alt="A.P.V Store"></a>
             <nav>
-                <ul>
-                    <li><a href="index.html">Início</a></li>
-                    <li><a href="feminino.html">Feminino</a></li>
-                    <li><a href="masculino.html">Masculino</a></li>
-                    <li><a href="unissex.html">Unissex</a></li>
-                    <li><a href="suporte.html">Suporte</a></li>
-                </ul>
+                <div class="nav-scroll-container">
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="feminino.html">Feminino</a></li>
+                        <li><a href="masculino.html">Masculino</a></li>
+                        <li><a href="unissex.html">Unissex</a></li>
+                        <li><a href="suporte.html">Suporte</a></li>
+                    </ul>
+                </div>
+                <a href="carrinho.html" class="carrinho-topo">🛒 Carrinho <span class="carrinho-contador" id="cart-count">0</span></a>
             </nav>
-            <a href="carrinho.html" class="carrinho-topo">🛒 Carrinho <span class="carrinho-contador" id="cart-count">0</span></a>
         </div>
     </header>
+
     <h2 class="categoria-titulo">Coleção Unissex</h2>
     <section class="produtos-grid">
         <a href="detalhe-u1.html" class="produto-card">
@@ -55,6 +73,7 @@
             <div class="produto-info"><h3 class="prod-nome">Camiseta Classic Unissex</h3><p class="prod-preco">R$ 89,90</p></div>
         </a>
     </section>
+
     <script>
         function atualizarContador() {
             const carrinho = JSON.parse(localStorage.getItem('apv_carrinho')) || [];
