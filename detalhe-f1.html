@@ -48,8 +48,8 @@
     <main class="detalhe-produto-container">
         <section class="detalhe-imagem-bloco"><img src="imagens/foto-produto-f1.webp" alt="Baby Look"></section>
         <section class="detalhe-info-bloco">
-            <h1 class="detalhe-nome">Baby Look Atraídos Pela Verdade</h1>
-            <p class="detalhe-preco">R$ 79,90</p>
+            <h1 class="detalhe-nome" id="nome-produto">Baby Look Atraídos Pela Verdade</h1>
+            <p class="detalhe-preco" id="preco-produto">R$ 79,90</p>
             
             <h3 class="detalhe-descricao-titulo">1️⃣ Escolha o Tamanho:</h3>
             <div class="tamanho-seletor">
@@ -78,7 +78,12 @@
                 alert("Por favor, selecione um tamanho antes de enviar o pedido!");
                 return;
             }
-            window.open("https://whatsfacil.com/l/3mdpidd", '_blank');
+            const produto = document.getElementById('nome-produto').innerText;
+            const preco = document.getElementById('preco-produto').innerText;
+            const textoMensagem = "Olá! Gostaria de fazer uma encomenda:\n\n👕 Produto: " + produto + "\n📏 Tamanho: " + tamanhoSelecionado + "\n💰 Preço: " + preco;
+            
+            // Une o WhatsFácil com as informações completas do produto de forma blindada
+            window.open("https://whatsfacil.com" + encodeURIComponent(textoMensagem), '_blank');
         }
     </script>
 </body>
