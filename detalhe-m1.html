@@ -21,14 +21,8 @@
         .detalhe-preco { font-size: 1.8rem; font-weight: 600; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--borda); }
         .detalhe-descricao-titulo { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--texto-mutado); margin-bottom: 0.75rem; }
         .detalhe-descricao-texto { font-size: 1rem; color: #cccccc; line-height: 1.8; margin-bottom: 2.5rem; }
-        
-        .tamanho-seletor { display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
-        .tamanho-opcao { background-color: transparent; color: var(--texto-claro); border: 1px solid var(--borda); padding: 0.8rem 1.5rem; font-size: 0.9rem; font-weight: 600; border-radius: 4px; cursor: pointer; transition: all 0.2s ease; flex: 1; min-width: 60px; text-align: center; }
-        .tamanho-opcao:hover { border-color: var(--texto-claro); }
-        .tamanho-opcao.selecionado { background-color: var(--destaque); color: var(--texto-escuro); border-color: var(--destaque); }
-        
-        .btn-enviar-pedido { display: block; width: 100%; text-align: center; background-color: #25d366; color: white; text-decoration: none; padding: 1.2rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; border-radius: 4px; border: none; cursor: pointer; transition: background-color 0.3s ease; margin-bottom: 2.5rem; }
-        .btn-enviar-pedido:hover { background-color: #1ebd59; }
+        .btn-comprar-whatsapp { display: block; text-align: center; background-color: var(--destaque); color: var(--texto-escuro); text-decoration: none; padding: 1.2rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; border-radius: 4px; transition: background-color 0.3s ease; }
+        .btn-comprar-whatsapp:hover { background-color: #cccccc; }
         @media (max-width: 968px) { header { flex-direction: column; gap: 1.5rem; padding: 1.5rem 0; } .logo-container img { height: 90px; } .detalhe-produto-container { grid-template-columns: 1fr; gap: 3rem; } .detalhe-info-bloco { position: static; } }
     </style>
 </head>
@@ -48,41 +42,20 @@
     <main class="detalhe-produto-container">
         <section class="detalhe-imagem-bloco"><img src="imagens/foto-produto-m1.webp" alt="Camiseta Masculina"></section>
         <section class="detalhe-info-bloco">
-            <h1 class="detalhe-nome" id="nome-produto">Camiseta Masculina APV Basília</h1>
-            <p class="detalhe-preco" id="preco-produto">R$ 89,90</p>
+            <h1 class="detalhe-nome">Camiseta Masculina APV Basília</h1>
+            <p class="detalhe-preco">R$ 89,90</p>
             
-            <h3 class="detalhe-descricao-titulo">1️⃣ Escolha o Tamanho:</h3>
-            <div class="tamanho-seletor">
-                <button class="tamanho-opcao" onclick="selecionarTamanho(this)">P</button>
-                <button class="tamanho-opcao" onclick="selecionarTamanho(this)">M</button>
-                <button class="tamanho-opcao" onclick="selecionarTamanho(this)">G</button>
-                <button class="tamanho-opcao" onclick="selecionarTamanho(this)">GG</button>
+            <h3 class="detalhe-descricao-titulo">Escolha o tamanho para fazer a encomenda no WhatsApp:</h3>
+            <div style="display: flex; gap: 1rem; margin-bottom: 2.5rem; flex-wrap: wrap;">
+                <a href="https://wa.me" target="_blank" class="btn-comprar-whatsapp" style="padding: 0.8rem 1.5rem; font-size: 0.8rem; flex: 1; min-width: 60px;">P</a>
+                <a href="https://wa.me" target="_blank" class="btn-comprar-whatsapp" style="padding: 0.8rem 1.5rem; font-size: 0.8rem; flex: 1; min-width: 60px;">M</a>
+                <a href="https://wa.me" target="_blank" class="btn-comprar-whatsapp" style="padding: 0.8rem 1.5rem; font-size: 0.8rem; flex: 1; min-width: 60px;">G</a>
+                <a href="https://wa.me" target="_blank" class="btn-comprar-whatsapp" style="padding: 0.8rem 1.5rem; font-size: 0.8rem; flex: 1; min-width: 60px;">GG</a>
             </div>
-
-            <button class="btn-enviar-pedido" onclick="enviarPedido()">2️⃣ Enviar Pedido via WhatsApp</button>
             
             <h3 class="detalhe-descricao-titulo">Descrição do Produto</h3>
             <p class="detalhe-descricao-texto">A Camiseta Masculina APV Basília traz um corte clássico tradicional com caimento reto perfeito para o dia a dia da juventude católica. Composta por fios de algodão penteado de alta gramatura, oferece resistência e excelente conforto térmico. A estampa traz elementos arquitetônicos e sacros de forma contemporânea. Cada compra ajuda no custeio das atividades e retiros do Grupo de Jovens Atraídos Pela Verdade.</p>
         </section>
     </main>
-
-    <script>
-        let tamanhoSelecionado = "";
-        function selecionarTamanho(botao) {
-            document.querySelectorAll('.tamanho-opcao').forEach(btn => btn.classList.remove('selecionado'));
-            botao.classList.add('selecionado');
-            tamanhoSelecionado = botao.innerText;
-        }
-        function enviarPedido() {
-            if (!tamanhoSelecionado) {
-                alert("Por favor, selecione um tamanho antes de enviar o pedido!");
-                return;
-            }
-            const produto = document.getElementById('nome-produto').innerText;
-            const preco = document.getElementById('preco-produto').innerText;
-            const msg = "Ola Gostaria de encomendar o produto " + produto + " no tamanho " + tamanhoSelecionado + " valor " + preco;
-            window.open("https://whatsapp.com" + encodeURIComponent(msg), '_blank');
-        }
-    </script>
 </body>
 </html>
