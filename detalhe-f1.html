@@ -68,23 +68,28 @@
 
     <script>
         let tamanhoSelecionado = "";
+
         function selecionarTamanho(botao) {
             document.querySelectorAll('.tamanho-opcao').forEach(btn => btn.classList.remove('selecionado'));
             botao.classList.add('selecionado');
             tamanhoSelecionado = botao.innerText;
         }
+
         function enviarPedido() {
             if (!tamanhoSelecionado) {
                 alert("Por favor, selecione um tamanho antes de enviar o pedido!");
                 return;
             }
+            
             const numeroLoja = "5512988315475";
             const produto = document.getElementById('nome-produto').innerText;
             const preco = document.getElementById('preco-produto').innerText;
+            
             const mensagem = "Olá! Gostaria de fazer uma encomenda:\n\n" +
                              "👕 Produto: " + produto + "\n" +
                              "📏 Tamanho: " + tamanhoSelecionado + "\n" +
                              "💰 Preço: " + preco;
+            
             const linkWhatsapp = "https://wa.me" + numeroLoja + "?text=" + encodeURIComponent(mensagem);
             window.open(linkWhatsapp, '_blank');
         }
