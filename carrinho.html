@@ -8,26 +8,21 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
         :root { --bg-principal: #0b0b0b; --bg-secundario: #121212; --texto-claro: #ffffff; --texto-escuro: #000000; --texto-mutado: #888888; --borda: #1c1c1c; --destaque: #ffffff; }
         body { background-color: var(--bg-principal); color: var(--texto-claro); overflow-x: hidden; }
-        
         header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 8%; background-color: rgba(11, 11, 11, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--borda); position: sticky; top: 0; z-index: 1000; }
         .logo-container { display: flex; align-items: center; text-decoration: none; }
         .logo-container img { height: 120px; width: auto; object-fit: contain; }
         nav ul { display: flex; list-style: none; gap: 3.5rem; }
         nav ul li a { color: var(--texto-claro); text-decoration: none; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 500; }
-        
         .carrinho-container { max-width: 800px; margin: 4rem auto; padding: 0 6%; }
         .carrinho-titulo { font-size: 2rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 2rem; border-bottom: 1px solid var(--borda); padding-bottom: 1rem; }
-        
         .lista-produtos { display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 3rem; }
         .item-checkout { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; background-color: var(--bg-secundario); border: 1px solid var(--borda); border-radius: 4px; }
         .item-info h3 { font-size: 1.1rem; margin-bottom: 6px; font-weight: 600; }
         .item-info p { font-size: 0.9rem; color: var(--texto-mutado); }
         .btn-remover-item { background: none; border: none; color: #ff4d4d; font-size: 0.9rem; cursor: pointer; font-weight: 500; }
-        
         .checkout-resumo { border-top: 1px solid var(--borda); padding-top: 2rem; display: flex; flex-direction: column; gap: 1.5rem; }
         .total-linha { display: flex; justify-content: space-between; font-size: 1.4rem; font-weight: 700; }
-        
-        .btn-finalizar-checkout { display: block; width: 100%; text-align: center; background-color: #25d366; color: white; padding: 1.2rem; font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; border-radius: 4px; border: none; cursor: pointer; text-decoration: none; transition: background-color 0.2s; }
+        .btn-finalizar-checkout { display: block; width: 100%; text-align: center; background-color: #25d366; color: white; padding: 1.2rem; font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; border-radius: 4px; border: none; cursor: pointer; transition: background-color 0.2s; }
         .btn-finalizar-checkout:hover { background-color: #1ebd59; }
         .btn-continuar-comprando { display: block; text-align: center; color: var(--texto-mutado); text-decoration: none; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-top: 1rem; }
         @media (max-width: 768px) { header { flex-direction: column; gap: 1rem; padding: 1rem 0; } nav ul { gap: 1.5rem; } }
@@ -50,16 +45,21 @@
     <main class="carrinho-container">
         <h1 class="carrinho-titulo">🛒 Seu Carrinho de Compras</h1>
         
-        <div class="lista-produtos" id="lista-checkout-itens">
-            <!-- Itens inseridos automaticamente -->
-        </div>
+        <div class="lista-produtos" id="lista-checkout-itens"></div>
         
         <div class="checkout-resumo">
             <div class="total-linha">
                 <span>Valor Total:</span>
                 <span id="valor-total-checkout">R$ 0,00</span>
             </div>
-            <button class="btn-finalizar-checkout" onclick="enviarPedidoWhatsApp()">Enviar Lista de Pedidos via WhatsApp</button>
+
+            <!-- Formulário HTML Puro oculto para disparar sem falhas de tradutor -->
+            <form action="https://whatsapp.com" method="GET" target="_blank" onsubmit="return processarPedido(this)">
+                <input type="hidden" name="phone" value="5512988315475">
+                <input type="hidden" name="text" id="campo-mensagem-final" value="">
+                <button type="submit" class="btn-finalizar-checkout">Enviar Lista de Pedidos via WhatsApp</button>
+            </form>
+
             <a href="index.html" class="btn-continuar-comprando">← Continuar Comprando</a>
         </div>
     </main>
@@ -80,7 +80,7 @@
                         <div class="item-checkout">
                             <div class="item-info">
                                 <h3>${item.nome}</h3>
-                                <p>Tamanho Selecionado: <b>${item.tamanho}</b></p>
+                                <p>Tamanho Selecionado: <b>${item.tamanho || item.size || 'M'}</b></p>
                                 <p>Preço unitário: R$ ${item.preco.toFixed(2).replace('.', ',')}</p>
                             </div>
                             <button class="btn-remover-item" onclick="deletarItem(${index})">Remover item</button>
@@ -98,28 +98,25 @@
             carregarCarrinho();
         }
 
-        function enviarPedidoWhatsApp() {
+        function processarPedido(formulario) {
             const carrinho = JSON.parse(localStorage.getItem('apv_carrinho')) || [];
             if (carrinho.length === 0) {
                 alert("Adicione pelo menos um produto antes de finalizar!");
-                return;
+                return false;
             }
 
-            const numeroLoja = "5512988315475";
-            let mensagem = "Olá APV Store! Gostaria de encomendar a seguinte lista de produtos:\n\n";
+            let msg = "Ola APV Store! Gostaria de encomendar estes produtos:\n\n";
             let total = 0;
 
             carrinho.forEach((item, i) => {
                 total += item.preco;
-                mensagem += (i + 1) + ") " + item.nome + "\n" +
-                            "   📏 Tamanho: " + item.tamanho + "\n" +
-                            "   💰 Valor: R$ " + item.preco.toFixed(2).replace('.', ',') + "\n\n";
+                let tam = item.tamanho || item.size || 'M';
+                msg += (i + 1) + ") " + item.nome + "\n   Tamanho: " + tam + "\n   Preco: R$ " + item.preco.toFixed(2).replace('.', ',') + "\n\n";
             });
 
-            mensagem += "=========================\n";
-            mensagem += "💰 TOTAL DO PEDIDO: R$ " + total.toFixed(2).replace('.', ',');
-
-            window.open("https://whatsapp.com" + numeroLoja + "&text=" + encodeURIComponent(mensagem), '_blank');
+            msg += "Total do Pedido: R$ " + total.toFixed(2).replace('.', ',');
+            formulario.elements['text'].value = msg;
+            return true;
         }
 
         window.onload = carregarCarrinho;
