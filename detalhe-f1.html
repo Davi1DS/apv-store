@@ -21,8 +21,14 @@
         .detalhe-preco { font-size: 1.8rem; font-weight: 600; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--borda); }
         .detalhe-descricao-titulo { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--texto-mutado); margin-bottom: 0.75rem; }
         .detalhe-descricao-texto { font-size: 1rem; color: #cccccc; line-height: 1.8; margin-bottom: 2.5rem; }
-        .btn-comprar-whatsapp { display: block; text-align: center; background-color: var(--destaque); color: var(--texto-escuro); text-decoration: none; padding: 1.2rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; border-radius: 4px; transition: background-color 0.3s ease; }
-        .btn-comprar-whatsapp:hover { background-color: #cccccc; }
+        
+        .tamanho-seletor { display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
+        .tamanho-opcao { background-color: transparent; color: var(--texto-claro); border: 1px solid var(--borda); padding: 0.8rem 1.5rem; font-size: 0.9rem; font-weight: 600; border-radius: 4px; cursor: pointer; transition: all 0.2s ease; flex: 1; min-width: 60px; text-align: center; }
+        .tamanho-opcao:hover { border-color: var(--texto-claro); }
+        .tamanho-opcao.selecionado { background-color: var(--destaque); color: var(--texto-escuro); border-color: var(--destaque); }
+        
+        .btn-enviar-pedido { display: block; width: 100%; text-align: center; background-color: #25d366; color: white; text-decoration: none; padding: 1.2rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; border-radius: 4px; border: none; cursor: pointer; transition: background-color 0.3s ease; margin-bottom: 2.5rem; }
+        .btn-enviar-pedido:hover { background-color: #1ebd59; }
         @media (max-width: 968px) { header { flex-direction: column; gap: 1.5rem; padding: 1.5rem 0; } .logo-container img { height: 90px; } .detalhe-produto-container { grid-template-columns: 1fr; gap: 3rem; } .detalhe-info-bloco { position: static; } }
     </style>
 </head>
@@ -42,20 +48,48 @@
     <main class="detalhe-produto-container">
         <section class="detalhe-imagem-bloco"><img src="imagens/foto-produto-f1.webp" alt="Baby Look"></section>
         <section class="detalhe-info-bloco">
-            <h1 class="detalhe-nome">Baby Look Atraídos Pela Verdade</h1>
-            <p class="detalhe-preco">R$ 79,90</p>
+            <h1 class="detalhe-nome" id="nome-prod">Baby Look Atraídos Pela Verdade</h1>
+            <p class="detalhe-preco" id="preco-prod">R$ 79,90</p>
             
-            <h3 class="detalhe-descricao-titulo">Escolha o tamanho para fazer a encomenda no WhatsApp:</h3>
-            <div style="display: flex; gap: 1rem; margin-bottom: 2.5rem; flex-wrap: wrap;">
-                <a href="https://wa.me" target="_blank" class="btn-comprar-whatsapp" style="padding: 0.8rem 1.5rem; font-size: 0.8rem; flex: 1; min-width: 60px;">P</a>
-                <a href="https://wa.me" target="_blank" class="btn-comprar-whatsapp" style="padding: 0.8rem 1.5rem; font-size: 0.8rem; flex: 1; min-width: 60px;">M</a>
-                <a href="https://wa.me" target="_blank" class="btn-comprar-whatsapp" style="padding: 0.8rem 1.5rem; font-size: 0.8rem; flex: 1; min-width: 60px;">G</a>
-                <a href="https://wa.me" target="_blank" class="btn-comprar-whatsapp" style="padding: 0.8rem 1.5rem; font-size: 0.8rem; flex: 1; min-width: 60px;">GG</a>
+            <h3 class="detalhe-descricao-titulo">1️⃣ Escolha o Tamanho:</h3>
+            <div class="tamanho-seletor">
+                <button class="tamanho-opcao" onclick="definirTamanho(this)">P</button>
+                <button class="tamanho-opcao" onclick="definirTamanho(this)">M</button>
+                <button class="tamanho-opcao" onclick="definirTamanho(this)">G</button>
+                <button class="tamanho-opcao" onclick="selecionarTamanhoRemoto(this)">GG</button>
             </div>
+
+            <form action="https://whatsapp.com" method="GET" target="_blank" onsubmit="return conferirPedido(this)">
+                <input type="hidden" name="phone" value="5512988315475">
+                <input type="hidden" name="text" id="campo-mensagem" value="">
+                <button type="submit" class="btn-enviar-pedido">2️⃣ Enviar Pedido via WhatsApp</button>
+            </form>
             
             <h3 class="detalhe-descricao-titulo">Descrição do Produto</h3>
             <p class="detalhe-descricao-texto">Desenvolvida especialmente para o público feminino, a Baby Look oficial do nosso ministério traz uma modelagem slim ajustada ao corpo, costura reforçada e tecido macio premium. Estampa minimalista de forte impacto visual. Renda revertida integralmente aos encontros e retiros do grupo de jovens.</p>
         </section>
     </main>
+
+    <script>
+        var tamEscolhido = "";
+        function definirTamanho(el) {
+            document.querySelectorAll('.tamanho-opcao').forEach(function(b) { b.classList.remove('selecionado'); });
+            el.classList.add('selecionado');
+            tamEscolhido = el.innerText;
+        }
+        function selecionarTamanhoRemoto(el) {
+            definirTamanho(el);
+        }
+        function conferirPedido(formulario) {
+            if (!tamEscolhido) {
+                alert("Por favor, selecione um tamanho antes de enviar o pedido!");
+                return false;
+            }
+            var n = document.getElementById('nome-prod').innerText;
+            var p = document.getElementById('preco-prod').innerText;
+            formulario.elements['text'].value = "Ola! Quero encomendar:\n\n👕 Produto: " + n + "\n📏 Tamanho: " + tamEscolhido + "\n💰 Valor: " + p;
+            return true;
+        }
+    </script>
 </body>
 </html>
