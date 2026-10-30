@@ -80,9 +80,8 @@
             }
             const produto = document.getElementById('nome-produto').innerText;
             const preco = document.getElementById('preco-produto').innerText;
-            const textoMensagem = "Olá! Gostaria de fazer uma encomenda:\n\n👕 Produto: " + produto + "\n📏 Tamanho: " + tamanhoSelecionado + "\n💰 Preço: " + preco;
-            
-            window.open("https://whatsfacil.com" + encodeURIComponent(textoMensagem), '_blank');
+            const msg = "Ola Gostaria de encomendar o produto " + produto + " no tamanho " + tamanhoSelecionado + " valor " + preco;
+            window.open("https://whatsapp.com" + encodeURIComponent(msg), '_blank');
         }
     </script>
 </body>
