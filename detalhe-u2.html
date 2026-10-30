@@ -51,7 +51,7 @@
             <h1 class="detalhe-nome" id="nome-produto">Camiseta Classic Unissex</h1>
             <p class="detalhe-preco" id="preco-produto">R$ 89,90</p>
             
-            <h3 class="detalhe-descricao-titulo">1️⃣ Escolha o Tamanho:</h3>
+            <h3 class="tamanho-seletor-titulo">1️⃣ Escolha o Tamanho:</h3>
             <div class="tamanho-seletor">
                 <button class="tamanho-opcao" onclick="selecionarTamanho(this)">P</button>
                 <button class="tamanho-opcao" onclick="selecionarTamanho(this)">M</button>
@@ -81,11 +81,11 @@
             const numeroLoja = "5512988315475";
             const produto = document.getElementById('nome-produto').innerText;
             const preco = document.getElementById('preco-produto').innerText;
-            const mensagem = "Olá! Gostaria de fazer uma encomenda:\n\n" +
-                             "👕 Produto: " + produto + "\n" +
-                             "📏 Tamanho: " + tamanhoSelecionado + "\n" +
-                             "💰 Preço: " + preco;
-            const linkWhatsapp = "https://wa.me" + numeroLoja + "?text=" + encodeURIComponent(mensagem);
+            const message = "Olá! Gostaria de fazer uma encomenda:\n\n" +
+                            "👕 Produto: " + produto + "\n" +
+                            "📏 Tamanho: " + tamanhoSelecionado + "\n" +
+                            "💰 Preço: " + preco;
+            const linkWhatsapp = "https://wa.me" + numeroLoja + "?text=" + encodeURIComponent(message);
             window.open(linkWhatsapp, '_blank');
         }
     </script>

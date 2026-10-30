@@ -62,7 +62,7 @@
             <button class="btn-enviar-pedido" onclick="enviarPedido()">2️⃣ Enviar Pedido via WhatsApp</button>
             
             <h3 class="detalhe-descricao-titulo">Descrição do Produto</h3>
-            <p class="detalhe-descricao-texto">Com design forte e focado na centralidade da nossa fé, a Camiseta Estampa de Cruz traz traços modernos e minimalistas no peito. Confeccionada com costuras duplas nas mangas e gola em ribana que não deforma com o tempo. Toda a verba arrecadada com as vendas deste produto é direcionada para a realização de novos cenáculos, retiros fechados e infraestrutura para acolher mais jovens na Igreja.</p>
+            <p class="detalhe-descricao-texto">Com design forte e focado na centralidade da nossa fé, a Camiseta Estampa de Cruz traz traços modernos e minimalistas no peito. Confeccionada com costuras duâmplas nas mangas e gola em ribana que não deforma com o tempo. Toda a verba arrecadada com as vendas deste produto é direcionada para a realização de novos cenáculos, retiros fechados e infraestrutura para acolher mais jovens na Igreja.</p>
         </section>
     </main>
 
@@ -81,11 +81,11 @@
             const numeroLoja = "5512988315475";
             const produto = document.getElementById('nome-produto').innerText;
             const preco = document.getElementById('preco-produto').innerText;
-            const mensagem = "Olá! Gostaria de fazer uma encomenda:\n\n" +
-                             "👕 Produto: " + produto + "\n" +
-                             "📏 Tamanho: " + tamanhoSelecionado + "\n" +
-                             "💰 Preço: " + preco;
-            const linkWhatsapp = "https://wa.me" + numeroLoja + "?text=" + encodeURIComponent(mensagem);
+            const message = "Olá! Gostaria de fazer uma encomenda:\n\n" +
+                            "👕 Produto: " + produto + "\n" +
+                            "📏 Tamanho: " + tamanhoSelecionado + "\n" +
+                            "💰 Preço: " + preco;
+            const linkWhatsapp = "https://wa.me" + numeroLoja + "?text=" + encodeURIComponent(message);
             window.open(linkWhatsapp, '_blank');
         }
     </script>

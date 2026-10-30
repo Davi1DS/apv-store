@@ -22,7 +22,6 @@
         .detalhe-descricao-titulo { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--texto-mutado); margin-bottom: 0.75rem; }
         .detalhe-descricao-texto { font-size: 1rem; color: #cccccc; line-height: 1.8; margin-bottom: 2.5rem; }
         
-        /* Estilos dos Seletores de Tamanho */
         .tamanho-seletor { display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
         .tamanho-opcao { background-color: transparent; color: var(--texto-claro); border: 1px solid var(--borda); padding: 0.8rem 1.5rem; font-size: 0.9rem; font-weight: 600; border-radius: 4px; cursor: pointer; transition: all 0.2s ease; flex: 1; min-width: 60px; text-align: center; }
         .tamanho-opcao:hover { border-color: var(--texto-claro); }
@@ -69,35 +68,24 @@
 
     <script>
         let tamanhoSelecionado = "";
-
         function selecionarTamanho(botao) {
-            // Remove a seleção de todos os botões
             document.querySelectorAll('.tamanho-opcao').forEach(btn => btn.classList.remove('selecionado'));
-            // Adiciona seleção ao botão clicado
             botao.classList.add('selecionado');
             tamanhoSelecionado = botao.innerText;
         }
-
         function enviarPedido() {
             if (!tamanhoSelecionado) {
                 alert("Por favor, selecione um tamanho antes de enviar o pedido!");
                 return;
             }
-            
             const numeroLoja = "5512988315475";
             const produto = document.getElementById('nome-produto').innerText;
             const preco = document.getElementById('preco-produto').innerText;
-            
-            // Monta o texto limpo pulando linhas perfeitamente
             const mensagem = "Olá! Gostaria de fazer uma encomenda:\n\n" +
                              "👕 Produto: " + produto + "\n" +
                              "📏 Tamanho: " + tamanhoSelecionado + "\n" +
                              "💰 Preço: " + preco;
-            
-            // Codifica de forma segura contra bloqueios
             const linkWhatsapp = "https://wa.me" + numeroLoja + "?text=" + encodeURIComponent(mensagem);
-            
-            // Abre o aplicativo instantaneamente
             window.open(linkWhatsapp, '_blank');
         }
     </script>
