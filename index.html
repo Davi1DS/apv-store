@@ -7,18 +7,16 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
         :root { --bg-principal: #0b0b0b; --bg-secundario: #121212; --texto-claro: #ffffff; --texto-escuro: #000000; --texto-mutado: #888888; --borda: #1c1c1c; --destaque: #ffffff; }
-        body { background-color: var(--bg-principal); color: var(--texto-claro); overflow-x: hidden; }
+        body { background-color: var(--bg-principal); color: var(--texto-claro); overflow-x: hidden; width: 100%; }
         
-        /* HEADER RESPONSIVO: Ajusta o tamanho perfeitamente em qualquer tela */
         header { background-color: rgba(11, 11, 11, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--borda); position: sticky; top: 0; z-index: 1000; padding: 1rem 5%; width: 100%; }
         .menu-estrutura { display: flex; flex-direction: column; align-items: center; width: 100%; gap: 1rem; }
         .logo-container { display: flex; align-items: center; text-decoration: none; }
         .logo-container img { height: 80px; width: auto; object-fit: contain; }
         
-        /* MENU HORIZONTAL DESLIZANTE: Arrasta para o lado suavemente no celular */
         nav { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
         .nav-scroll-container { flex-grow: 1; overflow-x: auto; white-space: nowrap; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
-        .nav-scroll-container::-webkit-scrollbar { display: none; } /* Esconde a barra de rolagem */
+        .nav-scroll-container::-webkit-scrollbar { display: none; }
         .nav-scroll-container { -ms-overflow-style: none; scrollbar-width: none; }
         
         nav ul { display: inline-flex; list-style: none; gap: 1.5rem; }
@@ -27,43 +25,39 @@
         .carrinho-topo { color: var(--texto-claro); text-decoration: none; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; display: flex; align-items: center; gap: 6px; cursor: pointer; white-space: nowrap; padding-left: 0.8rem; border-left: 1px solid var(--borda); }
         .carrinho-contador { background-color: #25d366; color: white; padding: 2px 8px; border-radius: 50%; font-size: 0.75rem; font-weight: bold; }
 
-        /* BANNER ROTATIVO (CARROSSEL AUTOMÁTICO) */
-        .carrossel-container { position: relative; width: 100%; height: 40vh; overflow: hidden; background-color: #050505; border-bottom: 1px solid var(--borda); }
-        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.8s ease-in-out; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 10%; background-color: #121212; }
-        .slide.ativo { opacity: 1; z-index: 2; }
-        .slide h2 { font-size: 1.8rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.5rem; color: #ffffff; }
-        .slide p { color: #aaaaaa; font-size: 0.95rem; max-width: 600px; line-height: 1.4; }
+        .hero { min-height: 35vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)); padding: 2rem 8%; border-bottom: 1px solid var(--borda); width: 100%; }
+        .hero h1 { font-size: 2rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.8rem; color: #ffffff; line-height: 1.2; }
+        .hero .slogan { font-size: 1.05rem; color: #25d366; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 1rem; }
+        .hero p { color: var(--texto-mutado); max-width: 600px; font-size: 0.95rem; line-height: 1.5; }
 
-        /* Vitrine de Produtos */
-        .vitrine-titulo { text-align: center; margin: 3.5rem 0 1.5rem; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px; }
-        .produtos-grid { max-width: 1300px; margin: 0 auto 4rem; padding: 0 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
-        .produto-card { background-color: var(--bg-secundario); border: 1px solid var(--borda); border-radius: 4px; overflow: hidden; transition: transform 0.3s ease; display: flex; flex-direction: column; text-decoration: none; color: inherit; }
-        .produto-card:hover { transform: translateY(-4px); border-color: #333; }
+        .vitrine-titulo { text-align: center; margin: 4rem 0 1.5rem; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .container-carrossel-produtos { max-width: 320px; margin: 0 auto 4rem; padding: 0; position: relative; height: 460px; width: 100%; }
+        
+        .produto-card { background-color: var(--bg-secundario); border: 1px solid var(--borda); border-radius: 4px; overflow: hidden; display: none; flex-direction: column; text-decoration: none; color: inherit; position: absolute; top: 0; left: 0; width: 100%; height: 100%; transition: opacity 0.5s ease-in-out; opacity: 0; z-index: 1; }
+        .produto-card.ativo { display: flex; opacity: 1; position: relative; z-index: 5; }
+        
         .produto-imagem { width: 100%; aspect-ratio: 3/4; overflow: hidden; background-color: #1a1a1a; }
-        .produto-imagem img { width: 100%; height: 100%; object-fit: cover; }
-        .produto-info { padding: 1rem; display: flex; flex-direction: column; gap: 0.4rem; flex-grow: 1; }
-        .prod-nome { font-size: 1rem; font-weight: 500; color: var(--texto-claro); }
-        .prod-preco { font-size: 0.95rem; color: var(--texto-mutado); font-weight: 600; }
+        .produto-imagem img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .produto-info { padding: 1.2rem; display: flex; flex-direction: column; gap: 0.5rem; flex-grow: 1; text-align: center; background-color: var(--bg-secundario); }
+        .prod-nome { font-size: 1.05rem; font-weight: 500; color: var(--texto-claro); line-height: 1.3; }
+        .prod-preco { font-size: 1rem; color: #25d366; font-weight: 600; }
 
-        /* SEÇÃO QUEM SOMOS E PROPÓSITO */
         .quem-somos-secao { background-color: var(--bg-secundario); border-top: 1px solid var(--borda); padding: 4rem 8%; text-align: center; width: 100%; }
         .quem-somos-container { max-width: 750px; margin: 0 auto; }
         .quem-somos-titulo { font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1.5rem; display: inline-block; border-bottom: 2px solid #25d366; padding-bottom: 0.4rem; }
-        .quem-somos-texto { color: #dddddd; font-size: 0.95rem; line-height: 1.8; margin-bottom: 1.2rem; text-align: justify; }
+        .quem-somos-texto { color: #dddddd; font-size: 0.95rem; line-height: 1.8; margin-bottom: 12px; text-align: justify; }
 
-        /* Ajustes para telas maiores (Computadores) */
         @media (min-width: 769px) {
             header { padding: 1rem 8%; }
             .menu-estrutura { flex-direction: row; justify-content: space-between; gap: 0; }
             nav { width: auto; }
             .carrinho-topo { padding-left: 1.5rem; }
-            .carrossel-container { height: 45vh; }
-            .slide h2 { font-size: 2.2rem; }
+            .hero h1 { font-size: 2.8rem; }
+            .container-carrossel-produtos { max-width: 380px; height: 530px; }
         }
     </style>
 </head>
 <body>
-
     <header>
         <div class="menu-estrutura">
             <a href="index.html" class="logo-container"><img src="imagens/logo.png" alt="A.P.V Store"></a>
@@ -77,34 +71,21 @@
                         <li><a href="suporte.html">Suporte</a></li>
                     </ul>
                 </div>
-                <a href="carrinho.html" class="carrinho-topo">🛒 Carrinho <span class="carrinho-contador" id="cart-count">0</span></a>
+                <a href="carrinho.html" class="carrinho-topo">🛒 <span class="carrinho-contador" id="cart-count">0</span></a>
             </nav>
         </div>
     </header>
 
-    <!-- CARROSSEL AUTOMÁTICO DE PRODUTOS (Muda sozinho a cada 4 segundos) -->
-    <section class="carrossel-container">
-        <!-- Slide 1 -->
-        <div class="slide ativo">
-            <h2>Camiseta Oversized Verdade</h2>
-            <p>Conforto premium e estilo urbano alinhado à presença marcante da nossa fé católica.</p>
-        </div>
-        <!-- Slide 2 -->
-        <div class="slide">
-            <h2>Camiseta Santidade Feminina</h2>
-            <p>Leve na estampa e no peito a linda convicção de que a santidade é possível na juventude.</p>
-        </div>
-        <!-- Slide 3 -->
-        <div class="slide">
-            <h2>Coleção Masculina APV Basília</h2>
-            <p>Corte tradicional com alta resistência para acompanhar você em todos os cercados e retiros.</p>
-        </div>
+    <section class="hero">
+        <h1>Seja Bem-vindo à A.P.V Store</h1>
+        <div class="slogan">Atraídos Pela Verdade, Vestidos com Propósito</div>
+        <p>Explore as coleções oficiais do nosso ministério e vista a sua fé com identidade, estilo e presença.</p>
     </section>
 
-    <h2 class="vitrine-titulo">Nossa Vitrine</h2>
+    <h2 class="vitrine-titulo">Produtos em Destaque</h2>
     
-    <section class="produtos-grid">
-        <a href="detalhe-f1.html" class="produto-card">
+    <section class="container-carrossel-produtos">
+        <a href="detalhe-f1.html" class="produto-card ativo">
             <div class="produto-imagem"><img src="imagens/foto-produto-f1.webp" alt="Baby Look"></div>
             <div class="produto-info"><h3 class="prod-nome">Baby Look Atraídos Pela Verdade</h3><p class="prod-preco">R$ 79,90</p></div>
         </a>
@@ -116,9 +97,20 @@
             <div class="produto-imagem"><img src="imagens/foto-produto-m1.webp" alt="Camiseta Basília"></div>
             <div class="produto-info"><h3 class="prod-nome">Camiseta Masculina APV Basília</h3><p class="prod-preco">R$ 89,90</p></div>
         </a>
+        <a href="detalhe-m2.html" class="produto-card">
+            <div class="produto-imagem"><img src="imagens/foto-produto-m2.jfif" alt="Camiseta Cruz"></div>
+            <div class="produto-info"><h3 class="prod-nome">Camiseta Estampa de Cruz</h3><p class="prod-preco">R$ 89,90</p></div>
+        </a>
+        <a href="detalhe-u1.html" class="produto-card">
+            <div class="produto-imagem"><img src="imagens/foto-produto-u1.jfif" alt="Oversized"></div>
+            <div class="produto-info"><h3 class="prod-nome">Camiseta Oversized Verdade</h3><p class="prod-preco">R$ 94,90</p></div>
+        </a>
+        <a href="detalhe-u2.html" class="produto-card">
+            <div class="produto-imagem"><img src="imagens/foto-produto-u2.jpg" alt="Classic"></div>
+            <div class="produto-info"><h3 class="prod-nome">Camiseta Classic Unissex</h3><p class="prod-preco">R$ 89,90</p></div>
+        </a>
     </section>
 
-    <!-- SEÇÃO TEXTUAL SOLICITADA: QUEM SOMOS E PROPÓSITO -->
     <section class="quem-somos-secao">
         <div class="quem-somos-container">
             <h2 class="quem-somos-titulo">Quem Somos & Nosso Propósito</h2>
@@ -137,16 +129,20 @@
             document.getElementById('cart-count').innerText = carrinho.length;
         }
 
-        // GERENCIADOR DO CARROSSEL AUTOMÁTICO
-        let currentSlide = 0;
-        function moverCarrossel() {
-            const slides = document.querySelectorAll('.slide');
-Use o código com cuidado.
-slides.forEach(s => s.classList.remove('ativo'));
-currentSlide = (currentSlide + 1) % slides.length;
-slides[currentSlide].classList.add('ativo');
-}
-window.onload = function() {
-atualizarContador();
-setInterval(moverCarrossel, 4000); // Roda sozinho a cada 4 segundos
-};
+        let produtoExibido = 0;
+        function gerenciarCarrosselProdutos() {
+            const listaCards = document.querySelectorAll('.container-carrossel-produtos .produto-card');
+            if(listaCards.length > 0) {
+                listaCards.forEach(card => card.classList.remove('active', 'ativo'));
+                produtoExibido = (produtoExibido + 1) % listaCards.length;
+                listaCards[produtoExibido].classList.add('ativo');
+            }
+        }
+
+        window.onload = function() {
+            atualizarContador();
+            setInterval(gerenciarCarrosselProdutos, 4000);
+        };
+    </script>
+</body>
+</html>
