@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A.P.V Store | Coleção Masculina</title>
+    <title>A.P.V Store | Masculino</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
         :root { --bg-principal: #0b0b0b; --bg-secundario: #121212; --texto-claro: #ffffff; --texto-escuro: #000000; --texto-mutado: #888888; --borda: #1c1c1c; --destaque: #ffffff; }
@@ -11,60 +11,56 @@
         header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 8%; background-color: rgba(11, 11, 11, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--borda); position: sticky; top: 0; z-index: 1000; }
         .logo-container { display: flex; align-items: center; text-decoration: none; }
         .logo-container img { height: 120px; width: auto; object-fit: contain; }
+        .menu-estrutura { display: flex; align-items: center; gap: 3.5rem; width: 100%; justify-content: space-between; }
         nav ul { display: flex; list-style: none; gap: 3.5rem; }
-        nav ul li a { color: var(--texto-claro); text-decoration: none; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 500; position: relative; }
-        nav ul li a:hover, nav ul li a.active { color: var(--texto-mutado); }
-        nav ul li a::after { content: ''; position: absolute; width: 0; height: 1px; bottom: -6px; left: 0; background-color: var(--destaque); transition: width 0.3s ease; }
-        .produtos-section { padding: 4rem 8% 6rem 8%; }
-        .titulo-pagina { font-size: 2rem; font-weight: 600; text-align: center; margin-bottom: 3rem; letter-spacing: 2px; text-transform: uppercase; }
-        .produtos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; max-width: 1000px; margin: 0 auto; justify-content: center; }
-        .produto-card { background-color: var(--bg-secundario); border: 1px solid var(--borda); border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.4s ease; }
-        .produto-card:hover { transform: translateY(-4px); }
-        .produto-imagem-wrapper { width: 100%; aspect-ratio: 3/4; overflow: hidden; background-color: #161616; }
-        .produto-imagem-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-        .produto-info { padding: 1.2rem; display: flex; flex-direction: column; flex-grow: 1; }
-        .produto-categoria { font-size: 0.65rem; text-transform: uppercase; color: var(--texto-mutado); margin-bottom: 0.4rem; }
-        .produto-nome { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.6rem; color: var(--texto-claro); }
-        .produto-preco { font-size: 1.1rem; font-weight: 600; margin-bottom: 1.2rem; color: var(--texto-claro); }
-        .btn-garantir { display: block; text-align: center; background-color: var(--destaque); color: var(--texto-escuro); text-decoration: none; padding: 0.75rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; margin-top: auto; border-radius: 2px; }
-        @media (max-width: 768px) { header { flex-direction: column; gap: 1.5rem; padding: 1.5rem 0; } .logo-container img { height: 90px; } .produtos-grid { grid-template-columns: 1fr 1fr; gap: 1rem; } }
+        nav ul li a { color: var(--texto-claro); text-decoration: none; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 500; }
+        .carrinho-topo { color: var(--texto-claro); text-decoration: none; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; display: flex; align-items: center; gap: 8px; cursor: pointer; margin-left: auto; }
+        .carrinho-contador { background-color: #25d366; color: white; padding: 2px 8px; border-radius: 50%; font-size: 0.75rem; font-weight: bold; }
+        .categoria-titulo { text-align: center; margin: 4rem 0 2rem; font-size: 2rem; text-transform: uppercase; letter-spacing: 3px; }
+        .produtos-grid { max-width: 1400px; margin: 0 auto 6rem; padding: 0 6%; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2.5rem; }
+        .produto-card { background-color: var(--bg-secundario); border: 1px solid var(--borda); border-radius: 4px; overflow: hidden; transition: transform 0.3s ease; display: flex; flex-direction: column; text-decoration: none; color: inherit; }
+        .produto-card:hover { transform: translateY(-5px); border-color: #333; }
+        .produto-imagem { width: 100%; aspect-ratio: 3/4; overflow: hidden; background-color: #1a1a1a; }
+        .produto-imagem img { width: 100%; height: 100%; object-fit: cover; }
+        .produto-info { padding: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; flex-grow: 1; }
+        .prod-nome { font-size: 1.1rem; font-weight: 500; color: var(--texto-claro); }
+        .prod-preco { font-size: 1rem; color: var(--texto-mutado); font-weight: 600; }
+        @media (max-width: 768px) { header { flex-direction: column; gap: 1rem; padding: 1rem 0; } .menu-estrutura { flex-direction: column; gap: 1rem; } .carrinho-topo { margin-left: 0; } }
     </style>
 </head>
 <body>
     <header>
-        <a href="index.html" class="logo-container"><img src="imagens/logo.png" alt="A.P.V Store"></a>
-        <nav>
-            <ul>
-                <li><a href="index.html">Início</a></li>
-                <li><a href="feminino.html">Feminino</a></li>
-                <li><a href="masculino.html" class="active">Masculino</a></li>
-                <li><a href="unissex.html">Unissex</a></li>
-                <li><a href="suporte.html">Suporte</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main class="produtos-section">
-        <h1 class="titulo-pagina">Coleção Masculina</h1>
-        <div class="produtos-grid">
-            <div class="produto-card">
-                <div class="produto-imagem-wrapper"><img src="imagens/foto-produto-m1.webp" alt="Camiseta Masculina"></div>
-                <div class="produto-info">
-                    <span class="produto-categoria">Masculino</span>
-                    <h2 class="produto-nome">Camiseta Masculina APV Basília</h2>
-                    <p class="produto-preco">R$ 89,90</p>
-                    <a href="detalhe-m1.html" class="btn-garantir">Garanta já</a>
-                </div>
-            </div>
-            <div class="produto-card">
-                <div class="produto-imagem-wrapper"><img src="imagens/foto-produto-m2.jfif" alt="Camiseta Masculina 2"></div>
-                <div class="produto-info">
-                    <span class="produto-categoria">Masculino</span>
-                    <h2 class="produto-nome">Camiseta Estampa de Cruz</h2>
-                    <p class="produto-preco">R$ 89,90</p>
-                    <a href="detalhe-m2.html" class="btn-garantir">Garanta já</a>
-                </div>
-            </div>
+        <div class="menu-estrutura">
+            <a href="index.html" class="logo-container"><img src="imagens/logo.png" alt="A.P.V Store"></a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="feminino.html">Feminino</a></li>
+                    <li><a href="masculino.html">Masculino</a></li>
+                    <li><a href="unissex.html">Unissex</a></li>
+                    <li><a href="suporte.html">Suporte</a></li>
+                </ul>
+            </nav>
+            <a href="carrinho.html" class="carrinho-topo">🛒 Carrinho <span class="carrinho-contador" id="cart-count">0</span></a>
         </div>
-    </main>
+    </header>
+    <h2 class="categoria-titulo">Coleção Masculina</h2>
+    <section class="produtos-grid">
+        <a href="detalhe-m1.html" class="produto-card">
+            <div class="produto-imagem"><img src="imagens/foto-produto-m1.webp" alt="Camiseta Basília"></div>
+            <div class="produto-info"><h3 class="prod-nome">Camiseta Masculina APV Basília</h3><p class="prod-preco">R$ 89,90</p></div>
+        </a>
+        <a href="detalhe-m2.html" class="produto-card">
+            <div class="produto-imagem"><img src="imagens/foto-produto-m2.jfif" alt="Camiseta Cruz"></div>
+            <div class="produto-info"><h3 class="prod-nome">Camiseta Estampa de Cruz</h3><p class="prod-preco">R$ 89,90</p></div>
+        </a>
+    </section>
+    <script>
+        function atualizarContador() {
+            const carrinho = JSON.parse(localStorage.getItem('apv_carrinho')) || [];
+            document.getElementById('cart-count').innerText = carrinho.length;
+        }
+        window.onload = atualizarContador;
+    </script>
 </body>
 </html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A.P.V Store | Seu Carrinho</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+        :root { --bg-principal: #0b0b0b; --bg-secundario: #121212; --texto-claro: #ffffff; --texto-escuro: #000000; --texto-mutado: #888888; --borda: #1c1c1c; --destaque: #ffffff; }
+        body { background-color: var(--bg-principal); color: var(--texto-claro); overflow-x: hidden; }
+        
+        header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 8%; background-color: rgba(11, 11, 11, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--borda); position: sticky; top: 0; z-index: 1000; }
+        .logo-container { display: flex; align-items: center; text-decoration: none; }
+        .logo-container img { height: 120px; width: auto; object-fit: contain; }
+        nav ul { display: flex; list-style: none; gap: 3.5rem; }
+        nav ul li a { color: var(--texto-claro); text-decoration: none; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 500; }
+        
+        .carrinho-container { max-width: 800px; margin: 4rem auto; padding: 0 6%; }
+        .carrinho-titulo { font-size: 2rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 2rem; border-bottom: 1px solid var(--borda); padding-bottom: 1rem; }
+        
+        .lista-produtos { display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 3rem; }
+        .item-checkout { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; background-color: var(--bg-secundario); border: 1px solid var(--borda); border-radius: 4px; }
+        .item-info h3 { font-size: 1.1rem; margin-bottom: 6px; font-weight: 600; }
+        .item-info p { font-size: 0.9rem; color: var(--texto-mutado); }
+        .btn-remover-item { background: none; border: none; color: #ff4d4d; font-size: 0.9rem; cursor: pointer; font-weight: 500; }
+        
+        .checkout-resumo { border-top: 1px solid var(--borda); padding-top: 2rem; display: flex; flex-direction: column; gap: 1.5rem; }
+        .total-linha { display: flex; justify-content: space-between; font-size: 1.4rem; font-weight: 700; }
+        
+        .btn-finalizar-checkout { display: block; width: 100%; text-align: center; background-color: #25d366; color: white; padding: 1.2rem; font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; border-radius: 4px; border: none; cursor: pointer; text-decoration: none; transition: background-color 0.2s; }
+        .btn-finalizar-checkout:hover { background-color: #1ebd59; }
+        .btn-continuar-comprando { display: block; text-align: center; color: var(--texto-mutado); text-decoration: none; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-top: 1rem; }
+        @media (max-width: 768px) { header { flex-direction: column; gap: 1rem; padding: 1rem 0; } nav ul { gap: 1.5rem; } }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo-container"><img src="imagens/logo.png" alt="A.P.V Store"></a>
+        <nav>
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="feminino.html">Feminino</a></li>
+                <li><a href="masculino.html">Masculino</a></li>
+                <li><a href="unissex.html">Unissex</a></li>
+                <li><a href="suporte.html">Suporte</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="carrinho-container">
+        <h1 class="carrinho-titulo">🛒 Seu Carrinho de Compras</h1>
+        
+        <div class="lista-produtos" id="lista-checkout-itens">
+            <!-- Itens inseridos automaticamente -->
+        </div>
+        
+        <div class="checkout-resumo">
+            <div class="total-linha">
+                <span>Valor Total:</span>
+                <span id="valor-total-checkout">R$ 0,00</span>
+            </div>
+            <button class="btn-finalizar-checkout" onclick="enviarPedidoWhatsApp()">Enviar Lista de Pedidos via WhatsApp</button>
+            <a href="index.html" class="btn-continuar-comprando">← Continuar Comprando</a>
+        </div>
+    </main>
+
+    <script>
+        function carregarCarrinho() {
+            const carrinho = JSON.parse(localStorage.getItem('apv_carrinho')) || [];
+            const container = document.getElementById('lista-checkout-itens');
+            container.innerHTML = "";
+            let total = 0;
+
+            if (carrinho.length === 0) {
+                container.innerHTML = "<p style='color: #888; text-align: center; padding: 3rem 0; font-size: 1.1rem;'>Seu carrinho está vazio no momento.</p>";
+            } else {
+                carrinho.forEach((item, index) => {
+                    total += item.preco;
+                    container.innerHTML += `
+                        <div class="item-checkout">
+                            <div class="item-info">
+                                <h3>${item.nome}</h3>
+                                <p>Tamanho Selecionado: <b>${item.tamanho}</b></p>
+                                <p>Preço unitário: R$ ${item.preco.toFixed(2).replace('.', ',')}</p>
+                            </div>
+                            <button class="btn-remover-item" onclick="deletarItem(${index})">Remover item</button>
+                        </div>
+                    `;
+                });
+            }
+            document.getElementById('valor-total-checkout').innerText = "R$ " + total.toFixed(2).replace('.', ',');
+        }
+
+        function deletarItem(index) {
+            const carrinho = JSON.parse(localStorage.getItem('apv_carrinho')) || [];
+            carrinho.splice(index, 1);
+            localStorage.setItem('apv_carrinho', JSON.stringify(carrinho));
+            carregarCarrinho();
+        }
+
+        function enviarPedidoWhatsApp() {
+            const carrinho = JSON.parse(localStorage.getItem('apv_carrinho')) || [];
+            if (carrinho.length === 0) {
+                alert("Adicione pelo menos um produto antes de finalizar!");
+                return;
+            }
+
+            const numeroLoja = "5512988315475";
+            let mensagem = "Olá APV Store! Gostaria de encomendar a seguinte lista de produtos:\n\n";
+            let total = 0;
+
+            carrinho.forEach((item, i) => {
+                total += item.preco;
+                mensagem += (i + 1) + ") " + item.nome + "\n" +
+                            "   📏 Tamanho: " + item.tamanho + "\n" +
+                            "   💰 Valor: R$ " + item.preco.toFixed(2).replace('.', ',') + "\n\n";
+            });
+
+            mensagem += "=========================\n";
+            mensagem += "💰 TOTAL DO PEDIDO: R$ " + total.toFixed(2).replace('.', ',');
+
+            window.open("https://whatsapp.com" + numeroLoja + "&text=" + encodeURIComponent(mensagem), '_blank');
+        }
+
+        window.onload = carregarCarrinho;
+    </script>
+</body>
+</html>

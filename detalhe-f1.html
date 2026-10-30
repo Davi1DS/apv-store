@@ -3,93 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A.P.V Store | Baby Look</title>
+    <title>A.P.V Store | Detalhes Baby Look</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
-        :root { --bg-principal: #0b0b0b; --bg-secundario: #121212; --texto-claro: #ffffff; --texto-escuro: #000000; --texto-mutado: #888888; --borda: #1c1c1c; --destaque: #ffffff; }
-        body { background-color: var(--bg-principal); color: var(--texto-claro); overflow-x: hidden; }
-        header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 8%; background-color: rgba(11, 11, 11, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--borda); position: sticky; top: 0; z-index: 1000; }
+        body { background-color: #0b0b0b; color: #fff; overflow-x: hidden; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 8%; background-color: rgba(11, 11, 11, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid #1c1c1c; position: sticky; top: 0; z-index: 1000; }
         .logo-container { display: flex; align-items: center; text-decoration: none; }
-        .logo-container img { height: 120px; width: auto; object-fit: contain; }
+        .logo-container img { height: 120px; width: auto; }
+        .menu-estrutura { display: flex; align-items: center; gap: 3.5rem; width: 100%; justify-content: space-between; }
         nav ul { display: flex; list-style: none; gap: 3.5rem; }
-        nav ul li a { color: var(--texto-claro); text-decoration: none; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 500; }
-        .detalhe-produto-container { max-width: 1400px; margin: 4rem auto; padding: 0 6%; display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
-        .detalhe-imagem-bloco { width: 100%; background-color: var(--bg-secundario); border: 1px solid var(--borda); border-radius: 4px; overflow: hidden; aspect-ratio: 3/4; }
-        .detalhe-imagem-bloco img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        nav ul li a { color: #fff; text-decoration: none; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; }
+        .carrinho-topo { color: #fff; text-decoration: none; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; display: flex; align-items: center; gap: 8px; cursor: pointer; margin-left: auto; }
+        .carrinho-contador { background-color: #25d366; color: white; padding: 2px 8px; border-radius: 50%; font-size: 0.75rem; font-weight: bold; }
+        .detalhe-produto-container { max-width: 1400px; margin: 4rem auto; padding: 0 6%; display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; }
+        .detalhe-imagem-bloco { width: 100%; background-color: #121212; border: 1px solid #1c1c1c; border-radius: 4px; aspect-ratio: 3/4; overflow: hidden; }
+        .detalhe-imagem-bloco img { width: 100%; height: 100%; object-fit: cover; }
         .detalhe-info-bloco { position: sticky; top: 160px; }
-        .detalhe-nome { font-size: 2.5rem; font-weight: 600; line-height: 1.2; margin-bottom: 1rem; }
-        .detalhe-preco { font-size: 1.8rem; font-weight: 600; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--borda); }
-        .detalhe-descricao-titulo { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--texto-mutado); margin-bottom: 0.75rem; }
-        .detalhe-descricao-texto { font-size: 1rem; color: #cccccc; line-height: 1.8; margin-bottom: 2.5rem; }
-        
+        .detalhe-nome { font-size: 2.5rem; font-weight: 600; margin-bottom: 1rem; }
+        .detalhe-preco { font-size: 1.8rem; font-weight: 600; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid #1c1c1c; }
         .tamanho-seletor { display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
-        .tamanho-opcao { background-color: transparent; color: var(--texto-claro); border: 1px solid var(--borda); padding: 0.8rem 1.5rem; font-size: 0.9rem; font-weight: 600; border-radius: 4px; cursor: pointer; transition: all 0.2s ease; flex: 1; min-width: 60px; text-align: center; }
-        .tamanho-opcao:hover { border-color: var(--texto-claro); }
-        .tamanho-opcao.selecionado { background-color: var(--destaque); color: var(--texto-escuro); border-color: var(--destaque); }
-        
-        .btn-enviar-pedido { display: block; width: 100%; text-align: center; background-color: #25d366; color: white; text-decoration: none; padding: 1.2rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; border-radius: 4px; border: none; cursor: pointer; transition: background-color 0.3s ease; margin-bottom: 2.5rem; }
-        .btn-enviar-pedido:hover { background-color: #1ebd59; }
-        @media (max-width: 968px) { header { flex-direction: column; gap: 1.5rem; padding: 1.5rem 0; } .logo-container img { height: 90px; } .detalhe-produto-container { grid-template-columns: 1fr; gap: 3rem; } .detalhe-info-bloco { position: static; } }
+        .tamanho-opcao { background-color: transparent; color: #fff; border: 1px solid #1c1c1c; padding: 0.8rem 1.5rem; font-size: 0.9rem; font-weight: 600; border-radius: 4px; cursor: pointer; flex: 1; min-width: 60px; text-align: center; }
+        .tamanho-opcao.selecionado { background-color: #fff; color: #000; border-color: #fff; }
+        .btn-adicionar-carrinho { display: block; width: 100%; text-align: center; background-color: #fff; color: #000; padding: 1.2rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; border-radius: 4px; border: none; cursor: pointer; transition: background-color 0.3s; margin-bottom: 1.5rem; }
+        .btn-adicionar-carrinho:hover { background-color: #ccc; }
+        .btn-voltar { display: block; text-align: center; color: #888; text-decoration: none; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        @media (max-width: 968px) { .detalhe-produto-container { grid-template-columns: 1fr; gap: 3rem; } .detalhe-info-bloco { position: static; } header { flex-direction: column; gap: 1rem; } .menu-estrutura { flex-direction: column; gap: 1rem; } .carrinho-topo { margin-left: 0; } }
     </style>
 </head>
 <body>
     <header>
-        <a href="index.html" class="logo-container"><img src="imagens/logo.png" alt="A.P.V Store"></a>
-        <nav>
-            <ul>
-                <li><a href="index.html">Início</a></li>
-                <li><a href="feminino.html">Feminino</a></li>
-                <li><a href="masculino.html">Masculino</a></li>
-                <li><a href="unissex.html">Unissex</a></li>
-                <li><a href="suporte.html">Suporte</a></li>
-            </ul>
-        </nav>
+        <div class="menu-estrutura">
+            <a href="index.html" class="logo-container"><img src="imagens/logo.png" alt="A.P.V Store"></a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="feminino.html">Feminino</a></li>
+                    <li><a href="masculino.html">Masculino</a></li>
+                    <li><a href="unissex.html">Unissex</a></li>
+                    <li><a href="suporte.html">Suporte</a></li>
+                </ul>
+            </nav>
+            <a href="carrinho.html" class="carrinho-topo">🛒 Carrinho <span class="carrinho-contador" id="cart-count">0</span></a>
+        </div>
     </header>
     <main class="detalhe-produto-container">
-        <section class="detalhe-imagem-bloco"><img src="imagens/foto-produto-f1.webp" alt="Baby Look"></section>
+        <section class="detalhe-imagem-bloco"><img src="imagens/foto-produto-f1.webp" alt="Baby Look APV"></section>
         <section class="detalhe-info-bloco">
-            <h1 class="detalhe-nome" id="nome-prod">Baby Look Atraídos Pela Verdade</h1>
-            <p class="detalhe-preco" id="preco-prod">R$ 79,90</p>
-            
-            <h3 class="detalhe-descricao-titulo">1️⃣ Escolha o Tamanho:</h3>
+            <h1 class="detalhe-nome" id="prod-name">Baby Look Atraídos Pela Verdade</h1>
+            <p class="detalhe-preco">R$ <span id="prod-price">79.90</span></p>
             <div class="tamanho-seletor">
-                <button class="tamanho-opcao" onclick="definirTamanho(this)">P</button>
-                <button class="tamanho-opcao" onclick="definirTamanho(this)">M</button>
-                <button class="tamanho-opcao" onclick="definirTamanho(this)">G</button>
-                <button class="tamanho-opcao" onclick="selecionarTamanhoRemoto(this)">GG</button>
+                <button class="tamanho-opcao" onclick="selecionarTamanho(this)">P</button>
+                <button class="tamanho-opcao" onclick="selecionarTamanho(this)">M</button>
+                <button class="tamanho-opcao" onclick="selecionarTamanho(this)">G</button>
+                <button class="tamanho-opcao" onclick="selecionarTamanho(this)">GG</button>
             </div>
-
-            <form action="https://whatsapp.com" method="GET" target="_blank" onsubmit="return conferirPedido(this)">
-                <input type="hidden" name="phone" value="5512988315475">
-                <input type="hidden" name="text" id="campo-mensagem" value="">
-                <button type="submit" class="btn-enviar-pedido">2️⃣ Enviar Pedido via WhatsApp</button>
-            </form>
-            
-            <h3 class="detalhe-descricao-titulo">Descrição do Produto</h3>
-            <p class="detalhe-descricao-texto">Desenvolvida especialmente para o público feminino, a Baby Look oficial do nosso ministério traz uma modelagem slim ajustada ao corpo, costura reforçada e tecido macio premium. Estampa minimalista de forte impacto visual. Renda revertida integralmente aos encontros e retiros do grupo de jovens.</p>
+            <button class="btn-adicionar-carrinho" onclick="adicionarAoCarrinho()">Adicionar ao Carrinho</button>
+            <a href="index.html" class="btn-voltar">Voltar para a Loja</a>
         </section>
     </main>
-
     <script>
-        var tamEscolhido = "";
-        function definirTamanho(el) {
-            document.querySelectorAll('.tamanho-opcao').forEach(function(b) { b.classList.remove('selecionado'); });
-            el.classList.add('selecionado');
-            tamEscolhido = el.innerText;
+        let tam = "";
+        function selecionarTamanho(b) {
+            document.querySelectorAll('.tamanho-opcao').forEach(btn => btn.classList.remove('selecionado'));
+            b.classList.add('selecionado');
+            tam = b.innerText;
         }
-        function selecionarTamanhoRemoto(el) {
-            definirTamanho(el);
+        function adicionarAoCarrinho() {
+            if(!tam) { alert("Por favor, selecione um tamanho!"); return; }
+            const c = JSON.parse(localStorage.getItem('apv_carrinho')) || [];
+            c.push({ nome: document.getElementById('prod-name').innerText, preco: parseFloat(document.getElementById('prod-price').innerText), tamanho: tam });
+            localStorage.setItem('apv_carrinho', JSON.stringify(c));
+            alert("Produto adicionado ao carrinho!");
+            window.location.href = "carrinho.html"; // Joga o cliente direto para o carrinho para fechar o pedido
         }
-        function conferirPedido(formulario) {
-            if (!tamEscolhido) {
-                alert("Por favor, selecione um tamanho antes de enviar o pedido!");
-                return false;
-            }
-            var n = document.getElementById('nome-prod').innerText;
-            var p = document.getElementById('preco-prod').innerText;
-            formulario.elements['text'].value = "Ola! Quero encomendar:\n\n👕 Produto: " + n + "\n📏 Tamanho: " + tamEscolhido + "\n💰 Valor: " + p;
-            return true;
+        function atualizarContador() {
+            const carrinho = JSON.parse(localStorage.getItem('apv_carrinho')) || [];
+            document.getElementById('cart-count').innerText = carrinho.length;
         }
+        window.onload = atualizarContador;
     </script>
 </body>
 </html>

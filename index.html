@@ -8,52 +8,82 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
         :root { --bg-principal: #0b0b0b; --bg-secundario: #121212; --texto-claro: #ffffff; --texto-escuro: #000000; --texto-mutado: #888888; --borda: #1c1c1c; --destaque: #ffffff; }
         body { background-color: var(--bg-principal); color: var(--texto-claro); overflow-x: hidden; }
+        
+        /* Menu com o Carrinho no Canto Superior Direito */
         header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 8%; background-color: rgba(11, 11, 11, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--borda); position: sticky; top: 0; z-index: 1000; }
         .logo-container { display: flex; align-items: center; text-decoration: none; }
         .logo-container img { height: 120px; width: auto; object-fit: contain; }
+        
+        .menu-estrutura { display: flex; align-items: center; gap: 3.5rem; width: 100%; justify-content: space-between; }
         nav ul { display: flex; list-style: none; gap: 3.5rem; }
-        nav ul li a { color: var(--texto-claro); text-decoration: none; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 500; position: relative; transition: color 0.3s ease; }
-        nav ul li a:hover, nav ul li a.active { color: var(--texto-mutado); }
-        nav ul li a::after { content: ''; position: absolute; width: 0; height: 1px; bottom: -6px; left: 0; background-color: var(--destaque); transition: width 0.3s ease; }
-        nav ul li a:hover::after, nav ul li a.active::after { width: 100%; }
-        .hero-banner { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; min-height: 50vh; padding: 0 10%; background-color: var(--bg-principal); }
-        .hero-banner h1 { font-size: clamp(2.3rem, 4.5vw, 4rem); font-weight: 700; letter-spacing: 0.5px; line-height: 1.25; margin-bottom: 1.5rem; max-width: 900px; }
-        .hero-banner p { font-size: clamp(0.95rem, 1.2vw, 1.15rem); color: var(--texto-mutado); max-width: 600px; line-height: 1.6; }
-        .btn-garantir { display: inline-block; text-align: center; background-color: var(--destaque); color: var(--texto-escuro); text-decoration: none; padding: 1rem 2.5rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; border-radius: 2px; transition: background-color 0.3s ease; margin-top: 2rem; }
-        .btn-garantir:hover { background-color: #cccccc; }
-        .content-section { background-color: #ffffff; color: #000000; padding: 5rem 6%; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
-        .block h2 { font-size: 2rem; margin-bottom: 1.5rem; font-weight: 700; }
-        .block p { font-size: 1rem; color: #333333; line-height: 1.7; }
-        @media (max-width: 768px) { header { flex-direction: column; gap: 1.5rem; padding: 1.5rem 0; } .logo-container img { height: 90px; } nav ul { gap: 1.5rem; } .content-section { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 6%; } }
+        nav ul li a { color: var(--texto-claro); text-decoration: none; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 500; }
+        
+        /* Ícone do Carrinho Alinhado à Direita */
+        .carrinho-topo { color: var(--texto-claro); text-decoration: none; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; display: flex; align-items: center; gap: 8px; cursor: pointer; margin-left: auto; }
+        .carrinho-contador { background-color: #25d366; color: white; padding: 2px 8px; border-radius: 50%; font-size: 0.75rem; font-weight: bold; }
+
+        .hero { height: 45vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)); padding: 0 10%; }
+        .hero h1 { font-size: 3rem; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 1rem; }
+        .hero p { color: var(--texto-mutado); max-width: 600px; font-size: 1rem; line-height: 1.6; }
+        .vitrine-titulo { text-align: center; margin: 4rem 0 2rem; font-size: 1.8rem; text-transform: uppercase; letter-spacing: 2px; }
+        
+        .produtos-grid { max-width: 1400px; margin: 0 auto 6rem; padding: 0 6%; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2.5rem; }
+        .produto-card { background-color: var(--bg-secundario); border: 1px solid var(--borda); border-radius: 4px; overflow: hidden; transition: transform 0.3s ease; display: flex; flex-direction: column; text-decoration: none; color: inherit; }
+        .produto-card:hover { transform: translateY(-5px); border-color: #333; }
+        .produto-imagem { width: 100%; aspect-ratio: 3/4; overflow: hidden; background-color: #1a1a1a; }
+        .produto-imagem img { width: 100%; height: 100%; object-fit: cover; }
+        .produto-info { padding: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; flex-grow: 1; }
+        .prod-nome { font-size: 1.1rem; font-weight: 500; color: var(--texto-claro); }
+        .prod-preco { font-size: 1rem; color: var(--texto-mutado); font-weight: 600; }
+        
+        @media (max-width: 768px) { header { flex-direction: column; gap: 1rem; padding: 1rem 0; } .menu-estrutura { flex-direction: column; gap: 1rem; } .carrinho-topo { margin-left: 0; } }
     </style>
 </head>
 <body>
     <header>
-        <a href="index.html" class="logo-container"><img src="imagens/logo.png" alt="A.P.V Store"></a>
-        <nav>
-            <ul>
-                <li><a href="index.html" class="active">Início</a></li>
-                <li><a href="feminino.html">Feminino</a></li>
-                <li><a href="masculino.html">Masculino</a></li>
-                <li><a href="unissex.html">Unissex</a></li>
-                <li><a href="suporte.html">Suporte</a></li>
-            </ul>
-        </nav>
+        <div class="menu-estrutura">
+            <a href="index.html" class="logo-container"><img src="imagens/logo.png" alt="A.P.V Store"></a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="feminino.html">Feminino</a></li>
+                    <li><a href="masculino.html">Masculino</a></li>
+                    <li><a href="unissex.html">Unissex</a></li>
+                    <li><a href="suporte.html">Suporte</a></li>
+                </ul>
+            </nav>
+            <!-- Abre a página especial ao clicar -->
+            <a href="carrinho.html" class="carrinho-topo">🛒 Carrinho <span class="carrinho-contador" id="cart-count">0</span></a>
+        </div>
     </header>
-    <main class="hero-banner">
-        <h1>Vestindo a Verdade que nos Liberta</h1>
-        <p>Camisetas exclusivas criadas para evangelizar com estilo, presença e propósito.</p>
-        <a href="unissex.html" class="btn-garantir">Conhecer Coleção</a>
-    </main>
-    <section class="content-section">
-        <div class="block">
-            <h2>Quem Somos Nós?</h2>
-            <p>A <b>A.P.V Store</b> é uma loja online criada pelo Grupo de Jovens <b>Atraídos Pela Verdade</b>, da Renovação Carismática Católica. Nascemos com o intuito de evangelizar através de uma marca de roupas marcante, que une forte presença visual e identidade cristã.</p>
-        </div>
-        <div class="block">
-            <h2>Por que arrecadamos?</h2>
-            <p>Toda a receita proveniente das vendas da <b>A.P.V. Store</b> destina-se, exclusivamente, ao custeio de nossos encontros, dinâmicas, retiros e demais atividades. Empenhamo-nos em oferecer a máxima excelência em cada iniciativa, com o firme propósito de testemunhar que a santidade é plenamente possível na juventude.</p>
-        </div>
+
+    <section class="hero">
+        <h1>Atraídos Pela Verdade</h1>
+        <p>Vista sua fé. Toda arrecadação é revertida para missões e cenáculos da juventude católica RCC.</p>
     </section>
+
+    <h2 class="vitrine-titulo">Nossos Produtos</h2>
+    <section class="produtos-grid">
+        <a href="detalhe-f1.html" class="produto-card">
+            <div class="produto-imagem"><img src="imagens/foto-produto-f1.webp" alt="Baby Look"></div>
+            <div class="produto-info"><h3 class="prod-nome">Baby Look Atraídos Pela Verdade</h3><p class="prod-preco">R$ 79,90</p></div>
+        </a>
+        <a href="detalhe-f2.html" class="produto-card">
+            <div class="produto-imagem"><img src="imagens/foto-produto-f2.avif" alt="Camiseta Santidade"></div>
+            <div class="produto-info"><h3 class="prod-nome">Camiseta Santidade Feminina</h3><p class="prod-preco">R$ 84,90</p></div>
+        </a>
+        <a href="detalhe-m1.html" class="produto-card">
+            <div class="produto-imagem"><img src="imagens/foto-produto-m1.webp" alt="Camiseta Basília"></div>
+            <div class="produto-info"><h3 class="prod-nome">Camiseta Masculina APV Basília</h3><p class="prod-preco">R$ 89,90</p></div>
+        </a>
+    </section>
+
+    <script>
+        function atualizarContador() {
+            const carrinho = JSON.parse(localStorage.getItem('apv_carrinho')) || [];
+            document.getElementById('cart-count').innerText = carrinho.length;
+        }
+        window.onload = atualizarContador;
+    </script>
 </body>
 </html>
